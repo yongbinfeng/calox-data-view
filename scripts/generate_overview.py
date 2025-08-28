@@ -2,7 +2,7 @@ import os
 from collections import defaultdict
 
 # Settings
-REPO_NAME = "calox-live-dqm"
+REPO_NAME = "calox-data-view"
 ROOT_DIR = "results/html"
 OUTPUT_FILE = "docs/overview.html"
 

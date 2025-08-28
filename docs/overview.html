@@ -1,0 +1,474 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>CaloX DQM Overview</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background: #f2f5f9;
+      margin: 0;
+      padding: 30px;
+    }
+
+    h1 {
+      color: #222;
+      margin-bottom: 20px;
+    }
+
+    .controls {
+      margin-bottom: 20px;
+    }
+
+    button {
+      background-color: #007acc;
+      border: none;
+      color: white;
+      padding: 8px 14px;
+      margin-right: 10px;
+      border-radius: 4px;
+      font-size: 0.95em;
+      cursor: pointer;
+      transition: background-color 0.2s ease;
+    }
+
+    button:hover {
+      background-color: #005a99;
+    }
+
+    details {
+      background: #ffffff;
+      border-radius: 8px;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+      margin-bottom: 15px;
+      padding: 16px;
+      transition: all 0.3s ease;
+    }
+
+    summary {
+      cursor: pointer;
+      font-weight: 600;
+      font-size: 1.1em;
+      color: #333;
+    }
+
+    details[open] {
+      box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+    }
+
+    details details {
+      margin-top: 10px;
+      background: #f9fbfc;
+      border-left: 4px solid #007acc;
+      padding: 12px;
+    }
+
+    details details summary {
+      font-size: 1em;
+      color: #005b99;
+    }
+
+    ul {
+      list-style: none;
+      padding-left: 0;
+      margin: 10px 0;
+    }
+
+    li {
+      margin: 10px 0;
+      background: #fff;
+      padding: 10px;
+      border: 1px solid #e0e0e0;
+      border-radius: 6px;
+      transition: background 0.2s;
+    }
+
+    li:hover {
+      background: #f4faff;
+    }
+
+    a {
+      text-decoration: none;
+      color: #007acc;
+      font-weight: 500;
+    }
+
+    a:hover {
+      text-decoration: underline;
+    }
+
+    iframe {
+      border: 1px solid #ccc;
+      margin-top: 10px;
+      width: 100%;
+      height: 300px;
+      border-radius: 4px;
+    }
+
+    summary::-webkit-details-marker {
+      display: none;
+    }
+  </style>
+  <script>
+    function toggleAllDetails(open) {
+      document.querySelectorAll("details").forEach(detail => {
+        detail.open = open;
+      });
+    }
+
+    document.addEventListener("DOMContentLoaded", function () {
+      document.querySelectorAll("details.preview").forEach(detail => {
+        detail.addEventListener("toggle", function () {
+          if (detail.open && !detail.dataset.loaded) {
+            const container = detail.querySelector(".iframe-container");
+            const src = container.dataset.src;
+            const iframe = document.createElement("iframe");
+            iframe.src = src;
+            iframe.loading = "lazy";
+            container.appendChild(iframe);
+            detail.dataset.loaded = "true";
+          }
+        });
+      });
+    });
+  </script>
+</head>
+<body>
+  <h1>CaloX Test Beam DQM Plots</h1>
+  <div class="controls">
+    <button onclick="toggleAllDetails(true)">Expand All</button>
+    <button onclick="toggleAllDetails(false)">Collapse All</button>
+  </div>
+  <details>
+    <summary>Run1256</summary>
+    <div>
+      <details>
+        <summary>ChannelMaps</summary>
+        <ul>
+          <li>
+            <a href="/calox-live-dqm/results/html/Run1256/ChannelMaps/DRSBoards/index.html" target="_blank">DRSBoards/index.html</a>
+            <details class="preview">
+              <summary style="font-size: 0.9em; color: #444;">Preview</summary>
+              <div class="iframe-container" data-src="/calox-live-dqm/results/html/Run1256/ChannelMaps/DRSBoards/index.html"></div>
+            </details>
+          </li>
+          <li>
+            <a href="/calox-live-dqm/results/html/Run1256/ChannelMaps/FERSBoards/index.html" target="_blank">FERSBoards/index.html</a>
+            <details class="preview">
+              <summary style="font-size: 0.9em; color: #444;">Preview</summary>
+              <div class="iframe-container" data-src="/calox-live-dqm/results/html/Run1256/ChannelMaps/FERSBoards/index.html"></div>
+            </details>
+          </li>
+        </ul>
+      </details>
+      <details>
+        <summary>Conditions_vs_Event</summary>
+        <ul>
+          <li>
+            <a href="/calox-live-dqm/results/html/Run1256/Conditions_vs_Event/index.html" target="_blank">index.html</a>
+            <details class="preview">
+              <summary style="font-size: 0.9em; color: #444;">Preview</summary>
+              <div class="iframe-container" data-src="/calox-live-dqm/results/html/Run1256/Conditions_vs_Event/index.html"></div>
+            </details>
+          </li>
+        </ul>
+      </details>
+      <details>
+        <summary>DRSPeakTS</summary>
+        <ul>
+          <li>
+            <a href="/calox-live-dqm/results/html/Run1256/DRSPeakTS/index.html" target="_blank">index.html</a>
+            <details class="preview">
+              <summary style="font-size: 0.9em; color: #444;">Preview</summary>
+              <div class="iframe-container" data-src="/calox-live-dqm/results/html/Run1256/DRSPeakTS/index.html"></div>
+            </details>
+          </li>
+        </ul>
+      </details>
+      <details>
+        <summary>DRSPeakTS2D</summary>
+        <ul>
+          <li>
+            <a href="/calox-live-dqm/results/html/Run1256/DRSPeakTS2D/index.html" target="_blank">index.html</a>
+            <details class="preview">
+              <summary style="font-size: 0.9em; color: #444;">Preview</summary>
+              <div class="iframe-container" data-src="/calox-live-dqm/results/html/Run1256/DRSPeakTS2D/index.html"></div>
+            </details>
+          </li>
+        </ul>
+      </details>
+      <details>
+        <summary>DRSPeak_vs_FERS</summary>
+        <ul>
+          <li>
+            <a href="/calox-live-dqm/results/html/Run1256/DRSPeak_vs_FERS/index.html" target="_blank">index.html</a>
+            <details class="preview">
+              <summary style="font-size: 0.9em; color: #444;">Preview</summary>
+              <div class="iframe-container" data-src="/calox-live-dqm/results/html/Run1256/DRSPeak_vs_FERS/index.html"></div>
+            </details>
+          </li>
+        </ul>
+      </details>
+      <details>
+        <summary>DRS_vs_TS</summary>
+        <ul>
+          <li>
+            <a href="/calox-live-dqm/results/html/Run1256/DRS_vs_TS/event23158.html" target="_blank">event23158.html</a>
+            <details class="preview">
+              <summary style="font-size: 0.9em; color: #444;">Preview</summary>
+              <div class="iframe-container" data-src="/calox-live-dqm/results/html/Run1256/DRS_vs_TS/event23158.html"></div>
+            </details>
+          </li>
+          <li>
+            <a href="/calox-live-dqm/results/html/Run1256/DRS_vs_TS/event24023.html" target="_blank">event24023.html</a>
+            <details class="preview">
+              <summary style="font-size: 0.9em; color: #444;">Preview</summary>
+              <div class="iframe-container" data-src="/calox-live-dqm/results/html/Run1256/DRS_vs_TS/event24023.html"></div>
+            </details>
+          </li>
+          <li>
+            <a href="/calox-live-dqm/results/html/Run1256/DRS_vs_TS/event24219.html" target="_blank">event24219.html</a>
+            <details class="preview">
+              <summary style="font-size: 0.9em; color: #444;">Preview</summary>
+              <div class="iframe-container" data-src="/calox-live-dqm/results/html/Run1256/DRS_vs_TS/event24219.html"></div>
+            </details>
+          </li>
+          <li>
+            <a href="/calox-live-dqm/results/html/Run1256/DRS_vs_TS/event28044.html" target="_blank">event28044.html</a>
+            <details class="preview">
+              <summary style="font-size: 0.9em; color: #444;">Preview</summary>
+              <div class="iframe-container" data-src="/calox-live-dqm/results/html/Run1256/DRS_vs_TS/event28044.html"></div>
+            </details>
+          </li>
+          <li>
+            <a href="/calox-live-dqm/results/html/Run1256/DRS_vs_TS/event3658.html" target="_blank">event3658.html</a>
+            <details class="preview">
+              <summary style="font-size: 0.9em; color: #444;">Preview</summary>
+              <div class="iframe-container" data-src="/calox-live-dqm/results/html/Run1256/DRS_vs_TS/event3658.html"></div>
+            </details>
+          </li>
+          <li>
+            <a href="/calox-live-dqm/results/html/Run1256/DRS_vs_TS/event3837.html" target="_blank">event3837.html</a>
+            <details class="preview">
+              <summary style="font-size: 0.9em; color: #444;">Preview</summary>
+              <div class="iframe-container" data-src="/calox-live-dqm/results/html/Run1256/DRS_vs_TS/event3837.html"></div>
+            </details>
+          </li>
+          <li>
+            <a href="/calox-live-dqm/results/html/Run1256/DRS_vs_TS/event4153.html" target="_blank">event4153.html</a>
+            <details class="preview">
+              <summary style="font-size: 0.9em; color: #444;">Preview</summary>
+              <div class="iframe-container" data-src="/calox-live-dqm/results/html/Run1256/DRS_vs_TS/event4153.html"></div>
+            </details>
+          </li>
+          <li>
+            <a href="/calox-live-dqm/results/html/Run1256/DRS_vs_TS/event4732.html" target="_blank">event4732.html</a>
+            <details class="preview">
+              <summary style="font-size: 0.9em; color: #444;">Preview</summary>
+              <div class="iframe-container" data-src="/calox-live-dqm/results/html/Run1256/DRS_vs_TS/event4732.html"></div>
+            </details>
+          </li>
+          <li>
+            <a href="/calox-live-dqm/results/html/Run1256/DRS_vs_TS/event7260.html" target="_blank">event7260.html</a>
+            <details class="preview">
+              <summary style="font-size: 0.9em; color: #444;">Preview</summary>
+              <div class="iframe-container" data-src="/calox-live-dqm/results/html/Run1256/DRS_vs_TS/event7260.html"></div>
+            </details>
+          </li>
+          <li>
+            <a href="/calox-live-dqm/results/html/Run1256/DRS_vs_TS/event7987.html" target="_blank">event7987.html</a>
+            <details class="preview">
+              <summary style="font-size: 0.9em; color: #444;">Preview</summary>
+              <div class="iframe-container" data-src="/calox-live-dqm/results/html/Run1256/DRS_vs_TS/event7987.html"></div>
+            </details>
+          </li>
+          <li>
+            <a href="/calox-live-dqm/results/html/Run1256/DRS_vs_TS/event885.html" target="_blank">event885.html</a>
+            <details class="preview">
+              <summary style="font-size: 0.9em; color: #444;">Preview</summary>
+              <div class="iframe-container" data-src="/calox-live-dqm/results/html/Run1256/DRS_vs_TS/event885.html"></div>
+            </details>
+          </li>
+          <li>
+            <a href="/calox-live-dqm/results/html/Run1256/DRS_vs_TS/event9027.html" target="_blank">event9027.html</a>
+            <details class="preview">
+              <summary style="font-size: 0.9em; color: #444;">Preview</summary>
+              <div class="iframe-container" data-src="/calox-live-dqm/results/html/Run1256/DRS_vs_TS/event9027.html"></div>
+            </details>
+          </li>
+          <li>
+            <a href="/calox-live-dqm/results/html/Run1256/DRS_vs_TS/event964.html" target="_blank">event964.html</a>
+            <details class="preview">
+              <summary style="font-size: 0.9em; color: #444;">Preview</summary>
+              <div class="iframe-container" data-src="/calox-live-dqm/results/html/Run1256/DRS_vs_TS/event964.html"></div>
+            </details>
+          </li>
+          <li>
+            <a href="/calox-live-dqm/results/html/Run1256/DRS_vs_TS/index.html" target="_blank">index.html</a>
+            <details class="preview">
+              <summary style="font-size: 0.9em; color: #444;">Preview</summary>
+              <div class="iframe-container" data-src="/calox-live-dqm/results/html/Run1256/DRS_vs_TS/index.html"></div>
+            </details>
+          </li>
+        </ul>
+      </details>
+      <details>
+        <summary>DRS_vs_TS_subtractMedian</summary>
+        <ul>
+          <li>
+            <a href="/calox-live-dqm/results/html/Run1256/DRS_vs_TS_subtractMedian/index.html" target="_blank">index.html</a>
+            <details class="preview">
+              <summary style="font-size: 0.9em; color: #444;">Preview</summary>
+              <div class="iframe-container" data-src="/calox-live-dqm/results/html/Run1256/DRS_vs_TS_subtractMedian/index.html"></div>
+            </details>
+          </li>
+        </ul>
+      </details>
+      <details>
+        <summary>EventDisplayElePeak</summary>
+        <ul>
+          <li>
+            <a href="/calox-live-dqm/results/html/Run1256/EventDisplayElePeak/index.html" target="_blank">index.html</a>
+            <details class="preview">
+              <summary style="font-size: 0.9em; color: #444;">Preview</summary>
+              <div class="iframe-container" data-src="/calox-live-dqm/results/html/Run1256/EventDisplayElePeak/index.html"></div>
+            </details>
+          </li>
+        </ul>
+      </details>
+      <details>
+        <summary>EventDisplayHE</summary>
+        <ul>
+          <li>
+            <a href="/calox-live-dqm/results/html/Run1256/EventDisplayHE/index.html" target="_blank">index.html</a>
+            <details class="preview">
+              <summary style="font-size: 0.9em; color: #444;">Preview</summary>
+              <div class="iframe-container" data-src="/calox-live-dqm/results/html/Run1256/EventDisplayHE/index.html"></div>
+            </details>
+          </li>
+        </ul>
+      </details>
+      <details>
+        <summary>EventDisplayInc</summary>
+        <ul>
+          <li>
+            <a href="/calox-live-dqm/results/html/Run1256/EventDisplayInc/index.html" target="_blank">index.html</a>
+            <details class="preview">
+              <summary style="font-size: 0.9em; color: #444;">Preview</summary>
+              <div class="iframe-container" data-src="/calox-live-dqm/results/html/Run1256/EventDisplayInc/index.html"></div>
+            </details>
+          </li>
+        </ul>
+      </details>
+      <details>
+        <summary>FERS_1D</summary>
+        <ul>
+          <li>
+            <a href="/calox-live-dqm/results/html/Run1256/FERS_1D/index.html" target="_blank">index.html</a>
+            <details class="preview">
+              <summary style="font-size: 0.9em; color: #444;">Preview</summary>
+              <div class="iframe-container" data-src="/calox-live-dqm/results/html/Run1256/FERS_1D/index.html"></div>
+            </details>
+          </li>
+        </ul>
+      </details>
+      <details>
+        <summary>FERS_Cer_vs_Sci</summary>
+        <ul>
+          <li>
+            <a href="/calox-live-dqm/results/html/Run1256/FERS_Cer_vs_Sci/index.html" target="_blank">index.html</a>
+            <details class="preview">
+              <summary style="font-size: 0.9em; color: #444;">Preview</summary>
+              <div class="iframe-container" data-src="/calox-live-dqm/results/html/Run1256/FERS_Cer_vs_Sci/index.html"></div>
+            </details>
+          </li>
+        </ul>
+      </details>
+      <details>
+        <summary>FERS_EnergySum</summary>
+        <ul>
+          <li>
+            <a href="/calox-live-dqm/results/html/Run1256/FERS_EnergySum/index.html" target="_blank">index.html</a>
+            <details class="preview">
+              <summary style="font-size: 0.9em; color: #444;">Preview</summary>
+              <div class="iframe-container" data-src="/calox-live-dqm/results/html/Run1256/FERS_EnergySum/index.html"></div>
+            </details>
+          </li>
+        </ul>
+      </details>
+      <details>
+        <summary>FERS_MaxValues</summary>
+        <ul>
+          <li>
+            <a href="/calox-live-dqm/results/html/Run1256/FERS_MaxValues/index.html" target="_blank">index.html</a>
+            <details class="preview">
+              <summary style="font-size: 0.9em; color: #444;">Preview</summary>
+              <div class="iframe-container" data-src="/calox-live-dqm/results/html/Run1256/FERS_MaxValues/index.html"></div>
+            </details>
+          </li>
+        </ul>
+      </details>
+      <details>
+        <summary>FERS_Stats</summary>
+        <ul>
+          <li>
+            <a href="/calox-live-dqm/results/html/Run1256/FERS_Stats/index.html" target="_blank">index.html</a>
+            <details class="preview">
+              <summary style="font-size: 0.9em; color: #444;">Preview</summary>
+              <div class="iframe-container" data-src="/calox-live-dqm/results/html/Run1256/FERS_Stats/index.html"></div>
+            </details>
+          </li>
+        </ul>
+      </details>
+      <details>
+        <summary>FERS_vs_DRS_Sum</summary>
+        <ul>
+          <li>
+            <a href="/calox-live-dqm/results/html/Run1256/FERS_vs_DRS_Sum/index.html" target="_blank">index.html</a>
+            <details class="preview">
+              <summary style="font-size: 0.9em; color: #444;">Preview</summary>
+              <div class="iframe-container" data-src="/calox-live-dqm/results/html/Run1256/FERS_vs_DRS_Sum/index.html"></div>
+            </details>
+          </li>
+        </ul>
+      </details>
+      <details>
+        <summary>HodoPos</summary>
+        <ul>
+          <li>
+            <a href="/calox-live-dqm/results/html/Run1256/HodoPos/viewer.html" target="_blank">viewer.html</a>
+            <details class="preview">
+              <summary style="font-size: 0.9em; color: #444;">Preview</summary>
+              <div class="iframe-container" data-src="/calox-live-dqm/results/html/Run1256/HodoPos/viewer.html"></div>
+            </details>
+          </li>
+        </ul>
+      </details>
+      <details>
+        <summary>ServiceDRS_subtractMedian</summary>
+        <ul>
+          <li>
+            <a href="/calox-live-dqm/results/html/Run1256/ServiceDRS_subtractMedian/index.html" target="_blank">index.html</a>
+            <details class="preview">
+              <summary style="font-size: 0.9em; color: #444;">Preview</summary>
+              <div class="iframe-container" data-src="/calox-live-dqm/results/html/Run1256/ServiceDRS_subtractMedian/index.html"></div>
+            </details>
+          </li>
+        </ul>
+      </details>
+      <details>
+        <summary>drs_service</summary>
+        <ul>
+          <li>
+            <a href="/calox-live-dqm/results/html/Run1256/drs_service/viewer.html" target="_blank">viewer.html</a>
+            <details class="preview">
+              <summary style="font-size: 0.9em; color: #444;">Preview</summary>
+              <div class="iframe-container" data-src="/calox-live-dqm/results/html/Run1256/drs_service/viewer.html"></div>
+            </details>
+          </li>
+        </ul>
+      </details>
+    </div>
+  </details>
+</body>
+</html>

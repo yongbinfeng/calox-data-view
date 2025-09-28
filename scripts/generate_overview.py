@@ -121,14 +121,6 @@ html = """<!DOCTYPE html>
       text-decoration: underline;
     }
 
-    iframe {
-      border: 1px solid #ccc;
-      margin-top: 10px;
-      width: 100%;
-      height: 300px;
-      border-radius: 4px;
-    }
-
     summary::-webkit-details-marker {
       display: none;
     }
@@ -139,22 +131,6 @@ html = """<!DOCTYPE html>
         detail.open = open;
       });
     }
-
-    document.addEventListener("DOMContentLoaded", function () {
-      document.querySelectorAll("details.preview").forEach(detail => {
-        detail.addEventListener("toggle", function () {
-          if (detail.open && !detail.dataset.loaded) {
-            const container = detail.querySelector(".iframe-container");
-            const src = container.dataset.src;
-            const iframe = document.createElement("iframe");
-            iframe.src = src;
-            iframe.loading = "lazy";
-            container.appendChild(iframe);
-            detail.dataset.loaded = "true";
-          }
-        });
-      });
-    });
   </script>
 </head>
 <body>
@@ -184,10 +160,7 @@ for run_name in sorted(grouped_entries.keys()):
             display_name = "/".join(parts[1:]) if len(parts) > 1 else parts[0]
             html += f'          <li>\n'
             html += f'            <a href="{web_path}" target="_blank">{display_name}</a>\n'
-            html += f'            <details class="preview">\n'
-            html += f'              <summary style="font-size: 0.9em; color: #444;">Preview</summary>\n'
-            html += f'              <div class="iframe-container" data-src="{web_path}"></div>\n'
-            html += f'            </details>\n'
+            # The preview <details> block has been removed from here
             html += f'          </li>\n'
         html += f'        </ul>\n      </details>\n'
     html += f'    </div>\n  </details>\n'

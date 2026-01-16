@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>PNG Plot Viewer</title>
+  <style>
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      padding: 30px;
+      margin: 0;
+      line-height: 1.6;
+      color: #333;
+    }
+    h1 {
+      font-size: 24px;
+      margin-bottom: 5px;
+      color: #1a1a1a;
+    }
+    .timestamp {
+      font-size: 14px;
+      color: #666;
+      margin-bottom: 20px;
+    }
+    .intro-text {
+      background: #f8f9fa;
+      border-left: 5px solid #007bff;
+      padding: 20px;
+      margin-bottom: 30px;
+      font-size: 16px;
+      border-radius: 0 4px 4px 0;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+    }
+    .controls {
+      position: sticky;
+      top: 0;
+      background: white;
+      padding: 15px 0;
+      z-index: 10;
+      border-bottom: 1px solid #eee;
+      margin-bottom: 25px;
+    }
+    input[type="text"] {
+      font-size: 16px;
+      padding: 8px 12px;
+      width: 350px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+    }
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(7, 1fr);
+      gap: 25px;
+    }
+    .plot {
+      border: 1px solid #e1e4e8;
+      padding: 12px;
+      text-align: center;
+      border-radius: 6px;
+      background: #fff;
+      transition: box-shadow 0.2s;
+    }
+    .plot:hover {
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    }
+    .filename {
+      font-weight: 600;
+      font-size: 13px;
+      margin-bottom: 10px;
+      word-break: break-all;
+      color: #444;
+    }
+    img {
+      max-width: 100%;
+      height: auto;
+      border-radius: 2px;
+    }
+    @media (max-width: 1200px) { .grid { grid-template-columns: repeat(2, 1fr); } }
+    @media (max-width: 600px) { .grid { grid-template-columns: 1fr; } }
+  </style>
+</head>
+<body>
+
+  <h1>PNG Plot Viewer</h1>
+  <div class="timestamp">Generated on: January 12, 2026, 01:30 AM CET</div>
+
+  
+
+  <div class="controls">
+    <input type="text" id="filterInput" placeholder="Filter by filename..." onkeyup="filterPlots()">
+    <label style="margin-left:15px"><input type="checkbox" id="regexToggle" onchange="filterPlots()"> Regex</label>
+    <label style="margin-left:10px"><input type="checkbox" id="caseToggle" onchange="filterPlots()"> Case</label>
+    <button onclick="clearFilter()" style="margin-left:20px; padding: 8px 12px; cursor:pointer;">Clear</button>
+  </div>
+
+  <div id="plotContainer">
+    <div class="grid">
+      <div class="plot" data-filename="UD2_peak_values.png">
+        <div class="filename">UD2_peak_values.png</div>
+        <a href="../../../plots/Run1524/DWC/UD2_peak_values.png" target="_blank">
+          <img src="../../../plots/Run1524/DWC/UD2_peak_values.png" alt="UD2_peak_values.png">
+        </a>
+      </div>
+      <div class="plot" data-filename="UD2_peak_values.png">
+        <div class="filename">UD2_peak_values.png</div>
+        <a href="../../../plots/Run1524/DWC/UD2_peak_values.png" target="_blank">
+          <img src="../../../plots/Run1524/DWC/UD2_peak_values.png" alt="UD2_peak_values.png">
+        </a>
+      </div>
+      <div class="plot" data-filename="UD2_peak_values.png">
+        <div class="filename">UD2_peak_values.png</div>
+        <a href="../../../plots/Run1524/DWC/UD2_peak_values.png" target="_blank">
+          <img src="../../../plots/Run1524/DWC/UD2_peak_values.png" alt="UD2_peak_values.png">
+        </a>
+      </div>
+      <div class="plot" data-filename="UD2_peak_values.png">
+        <div class="filename">UD2_peak_values.png</div>
+        <a href="../../../plots/Run1524/DWC/UD2_peak_values.png" target="_blank">
+          <img src="../../../plots/Run1524/DWC/UD2_peak_values.png" alt="UD2_peak_values.png">
+        </a>
+      </div>
+    </div>
+    <div class="grid">
+      <div class="plot" data-filename="LR1_diff_peak.png">
+        <div class="filename">LR1_diff_peak.png</div>
+        <a href="../../../plots/Run1524/DWC/LR1_diff_peak.png" target="_blank">
+          <img src="../../../plots/Run1524/DWC/LR1_diff_peak.png" alt="LR1_diff_peak.png">
+        </a>
+      </div>
+      <div class="plot" data-filename="LR1_diff_peak_relative.png">
+        <div class="filename">LR1_diff_peak_relative.png</div>
+        <a href="../../../plots/Run1524/DWC/LR1_diff_peak_relative.png" target="_blank">
+          <img src="../../../plots/Run1524/DWC/LR1_diff_peak_relative.png" alt="LR1_diff_peak_relative.png">
+        </a>
+      </div>
+      <div class="plot" data-filename="LR1_sum_peak.png">
+        <div class="filename">LR1_sum_peak.png</div>
+        <a href="../../../plots/Run1524/DWC/LR1_sum_peak.png" target="_blank">
+          <img src="../../../plots/Run1524/DWC/LR1_sum_peak.png" alt="LR1_sum_peak.png">
+        </a>
+      </div>
+      <div class="plot" data-filename="LR1_peaks.png">
+        <div class="filename">LR1_peaks.png</div>
+        <a href="../../../plots/Run1524/DWC/LR1_peaks.png" target="_blank">
+          <img src="../../../plots/Run1524/DWC/LR1_peaks.png" alt="LR1_peaks.png">
+        </a>
+      </div>
+      <div class="plot" data-filename="LR1_left_vs_right_peak_pass_NoSel.png">
+        <div class="filename">LR1_left_vs_right_peak_pass_NoSel.png</div>
+        <a href="../../../plots/Run1524/DWC/LR1_left_vs_right_peak_pass_NoSel.png" target="_blank">
+          <img src="../../../plots/Run1524/DWC/LR1_left_vs_right_peak_pass_NoSel.png" alt="LR1_left_vs_right_peak_pass_NoSel.png">
+        </a>
+      </div>
+      <div class="plot" data-filename="LR1_left_vs_right_peak_pass_upstream_veto.png">
+        <div class="filename">LR1_left_vs_right_peak_pass_upstream_veto.png</div>
+        <a href="../../../plots/Run1524/DWC/LR1_left_vs_right_peak_pass_upstream_veto.png" target="_blank">
+          <img src="../../../plots/Run1524/DWC/LR1_left_vs_right_peak_pass_upstream_veto.png" alt="LR1_left_vs_right_peak_pass_upstream_veto.png">
+        </a>
+      </div>
+      <div class="plot" data-filename="LR1_peak_values.png">
+        <div class="filename">LR1_peak_values.png</div>
+        <a href="../../../plots/Run1524/DWC/LR1_peak_values.png" target="_blank">
+          <img src="../../../plots/Run1524/DWC/LR1_peak_values.png" alt="LR1_peak_values.png">
+        </a>
+      </div>
+      <div class="plot" data-filename="UD1_diff_peak.png">
+        <div class="filename">UD1_diff_peak.png</div>
+        <a href="../../../plots/Run1524/DWC/UD1_diff_peak.png" target="_blank">
+          <img src="../../../plots/Run1524/DWC/UD1_diff_peak.png" alt="UD1_diff_peak.png">
+        </a>
+      </div>
+      <div class="plot" data-filename="UD1_diff_peak_relative.png">
+        <div class="filename">UD1_diff_peak_relative.png</div>
+        <a href="../../../plots/Run1524/DWC/UD1_diff_peak_relative.png" target="_blank">
+          <img src="../../../plots/Run1524/DWC/UD1_diff_peak_relative.png" alt="UD1_diff_peak_relative.png">
+        </a>
+      </div>
+      <div class="plot" data-filename="UD1_sum_peak.png">
+        <div class="filename">UD1_sum_peak.png</div>
+        <a href="../../../plots/Run1524/DWC/UD1_sum_peak.png" target="_blank">
+          <img src="../../../plots/Run1524/DWC/UD1_sum_peak.png" alt="UD1_sum_peak.png">
+        </a>
+      </div>
+      <div class="plot" data-filename="UD1_peaks.png">
+        <div class="filename">UD1_peaks.png</div>
+        <a href="../../../plots/Run1524/DWC/UD1_peaks.png" target="_blank">
+          <img src="../../../plots/Run1524/DWC/UD1_peaks.png" alt="UD1_peaks.png">
+        </a>
+      </div>
+      <div class="plot" data-filename="UD1_left_vs_right_peak_pass_NoSel.png">
+        <div class="filename">UD1_left_vs_right_peak_pass_NoSel.png</div>
+        <a href="../../../plots/Run1524/DWC/UD1_left_vs_right_peak_pass_NoSel.png" target="_blank">
+          <img src="../../../plots/Run1524/DWC/UD1_left_vs_right_peak_pass_NoSel.png" alt="UD1_left_vs_right_peak_pass_NoSel.png">
+        </a>
+      </div>
+      <div class="plot" data-filename="UD1_left_vs_right_peak_pass_upstream_veto.png">
+        <div class="filename">UD1_left_vs_right_peak_pass_upstream_veto.png</div>
+        <a href="../../../plots/Run1524/DWC/UD1_left_vs_right_peak_pass_upstream_veto.png" target="_blank">
+          <img src="../../../plots/Run1524/DWC/UD1_left_vs_right_peak_pass_upstream_veto.png" alt="UD1_left_vs_right_peak_pass_upstream_veto.png">
+        </a>
+      </div>
+      <div class="plot" data-filename="UD1_peak_values.png">
+        <div class="filename">UD1_peak_values.png</div>
+        <a href="../../../plots/Run1524/DWC/UD1_peak_values.png" target="_blank">
+          <img src="../../../plots/Run1524/DWC/UD1_peak_values.png" alt="UD1_peak_values.png">
+        </a>
+      </div>
+      <div class="plot" data-filename="LR2_diff_peak.png">
+        <div class="filename">LR2_diff_peak.png</div>
+        <a href="../../../plots/Run1524/DWC/LR2_diff_peak.png" target="_blank">
+          <img src="../../../plots/Run1524/DWC/LR2_diff_peak.png" alt="LR2_diff_peak.png">
+        </a>
+      </div>
+      <div class="plot" data-filename="LR2_diff_peak_relative.png">
+        <div class="filename">LR2_diff_peak_relative.png</div>
+        <a href="../../../plots/Run1524/DWC/LR2_diff_peak_relative.png" target="_blank">
+          <img src="../../../plots/Run1524/DWC/LR2_diff_peak_relative.png" alt="LR2_diff_peak_relative.png">
+        </a>
+      </div>
+      <div class="plot" data-filename="LR2_sum_peak.png">
+        <div class="filename">LR2_sum_peak.png</div>
+        <a href="../../../plots/Run1524/DWC/LR2_sum_peak.png" target="_blank">
+          <img src="../../../plots/Run1524/DWC/LR2_sum_peak.png" alt="LR2_sum_peak.png">
+        </a>
+      </div>
+      <div class="plot" data-filename="LR2_peaks.png">
+        <div class="filename">LR2_peaks.png</div>
+        <a href="../../../plots/Run1524/DWC/LR2_peaks.png" target="_blank">
+          <img src="../../../plots/Run1524/DWC/LR2_peaks.png" alt="LR2_peaks.png">
+        </a>
+      </div>
+      <div class="plot" data-filename="LR2_left_vs_right_peak_pass_NoSel.png">
+        <div class="filename">LR2_left_vs_right_peak_pass_NoSel.png</div>
+        <a href="../../../plots/Run1524/DWC/LR2_left_vs_right_peak_pass_NoSel.png" target="_blank">
+          <img src="../../../plots/Run1524/DWC/LR2_left_vs_right_peak_pass_NoSel.png" alt="LR2_left_vs_right_peak_pass_NoSel.png">
+        </a>
+      </div>
+      <div class="plot" data-filename="LR2_left_vs_right_peak_pass_upstream_veto.png">
+        <div class="filename">LR2_left_vs_right_peak_pass_upstream_veto.png</div>
+        <a href="../../../plots/Run1524/DWC/LR2_left_vs_right_peak_pass_upstream_veto.png" target="_blank">
+          <img src="../../../plots/Run1524/DWC/LR2_left_vs_right_peak_pass_upstream_veto.png" alt="LR2_left_vs_right_peak_pass_upstream_veto.png">
+        </a>
+      </div>
+      <div class="plot" data-filename="LR2_peak_values.png">
+        <div class="filename">LR2_peak_values.png</div>
+        <a href="../../../plots/Run1524/DWC/LR2_peak_values.png" target="_blank">
+          <img src="../../../plots/Run1524/DWC/LR2_peak_values.png" alt="LR2_peak_values.png">
+        </a>
+      </div>
+      <div class="plot" data-filename="UD2_diff_peak.png">
+        <div class="filename">UD2_diff_peak.png</div>
+        <a href="../../../plots/Run1524/DWC/UD2_diff_peak.png" target="_blank">
+          <img src="../../../plots/Run1524/DWC/UD2_diff_peak.png" alt="UD2_diff_peak.png">
+        </a>
+      </div>
+      <div class="plot" data-filename="UD2_diff_peak_relative.png">
+        <div class="filename">UD2_diff_peak_relative.png</div>
+        <a href="../../../plots/Run1524/DWC/UD2_diff_peak_relative.png" target="_blank">
+          <img src="../../../plots/Run1524/DWC/UD2_diff_peak_relative.png" alt="UD2_diff_peak_relative.png">
+        </a>
+      </div>
+      <div class="plot" data-filename="UD2_sum_peak.png">
+        <div class="filename">UD2_sum_peak.png</div>
+        <a href="../../../plots/Run1524/DWC/UD2_sum_peak.png" target="_blank">
+          <img src="../../../plots/Run1524/DWC/UD2_sum_peak.png" alt="UD2_sum_peak.png">
+        </a>
+      </div>
+      <div class="plot" data-filename="UD2_peaks.png">
+        <div class="filename">UD2_peaks.png</div>
+        <a href="../../../plots/Run1524/DWC/UD2_peaks.png" target="_blank">
+          <img src="../../../plots/Run1524/DWC/UD2_peaks.png" alt="UD2_peaks.png">
+        </a>
+      </div>
+      <div class="plot" data-filename="UD2_left_vs_right_peak_pass_NoSel.png">
+        <div class="filename">UD2_left_vs_right_peak_pass_NoSel.png</div>
+        <a href="../../../plots/Run1524/DWC/UD2_left_vs_right_peak_pass_NoSel.png" target="_blank">
+          <img src="../../../plots/Run1524/DWC/UD2_left_vs_right_peak_pass_NoSel.png" alt="UD2_left_vs_right_peak_pass_NoSel.png">
+        </a>
+      </div>
+      <div class="plot" data-filename="UD2_left_vs_right_peak_pass_upstream_veto.png">
+        <div class="filename">UD2_left_vs_right_peak_pass_upstream_veto.png</div>
+        <a href="../../../plots/Run1524/DWC/UD2_left_vs_right_peak_pass_upstream_veto.png" target="_blank">
+          <img src="../../../plots/Run1524/DWC/UD2_left_vs_right_peak_pass_upstream_veto.png" alt="UD2_left_vs_right_peak_pass_upstream_veto.png">
+        </a>
+      </div>
+      <div class="plot" data-filename="UD2_peak_values.png">
+        <div class="filename">UD2_peak_values.png</div>
+        <a href="../../../plots/Run1524/DWC/UD2_peak_values.png" target="_blank">
+          <img src="../../../plots/Run1524/DWC/UD2_peak_values.png" alt="UD2_peak_values.png">
+        </a>
+      </div>
+    </div>
+  </div>
+  <script>
+    function getQueryParams() {
+      const params = new URLSearchParams(window.location.search);
+      return { filter: params.get("filter") || "", regex: params.get("regex") === "1", caseSensitive: params.get("case") === "1" };
+    }
+    function updateURLParams(filter, regex, caseSensitive) {
+      const params = new URLSearchParams();
+      if (filter) params.set("filter", filter);
+      if (regex) params.set("regex", "1");
+      if (caseSensitive) params.set("case", "1");
+      history.replaceState(null, "", `${window.location.pathname}?${params.toString()}`);
+    }
+    function filterPlots() {
+      const input = document.getElementById("filterInput").value.trim();
+      const useRegex = document.getElementById("regexToggle").checked;
+      const caseSensitive = document.getElementById("caseToggle").checked;
+      const plots = document.getElementsByClassName("plot");
+      updateURLParams(input, useRegex, caseSensitive);
+      for (let plot of plots) {
+        const name = plot.getAttribute("data-filename");
+        let match = false;
+        if (useRegex) {
+          try {
+            const escaped = input.replace(/[-\/\^$+?.()|[\]{{}}]/g, '\\$&').replace(/\*/g, '.*').replace(/\?/g, '.');
+            const regex = new RegExp(escaped, caseSensitive ? "" : "i");
+            match = regex.test(name);
+          } catch (e) { match = false; }
+        } else {
+          match = caseSensitive ? name.includes(input) : name.toLowerCase().includes(input.toLowerCase());
+        }
+        plot.style.display = match ? "" : "none";
+      }
+    }
+    function clearFilter() {
+      document.getElementById("filterInput").value = "";
+      document.getElementById("regexToggle").checked = false;
+      document.getElementById("caseToggle").checked = false;
+      filterPlots();
+    }
+    window.addEventListener("DOMContentLoaded", () => {
+      const { filter, regex, caseSensitive } = getQueryParams();
+      document.getElementById("filterInput").value = filter;
+      document.getElementById("regexToggle").checked = regex;
+      document.getElementById("caseToggle").checked = caseSensitive;
+      filterPlots();
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>PNG Plot Viewer</title>
+  <style>
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      padding: 30px;
+      margin: 0;
+      line-height: 1.6;
+      color: #333;
+    }
+    h1 {
+      font-size: 24px;
+      margin-bottom: 5px;
+      color: #1a1a1a;
+    }
+    .timestamp {
+      font-size: 14px;
+      color: #666;
+      margin-bottom: 20px;
+    }
+    .intro-text {
+      background: #f8f9fa;
+      border-left: 5px solid #007bff;
+      padding: 20px;
+      margin-bottom: 30px;
+      font-size: 16px;
+      border-radius: 0 4px 4px 0;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+    }
+    .controls {
+      position: sticky;
+      top: 0;
+      background: white;
+      padding: 15px 0;
+      z-index: 10;
+      border-bottom: 1px solid #eee;
+      margin-bottom: 25px;
+    }
+    input[type="text"] {
+      font-size: 16px;
+      padding: 8px 12px;
+      width: 350px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+    }
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 25px;
+    }
+    .plot {
+      border: 1px solid #e1e4e8;
+      padding: 12px;
+      text-align: center;
+      border-radius: 6px;
+      background: #fff;
+      transition: box-shadow 0.2s;
+    }
+    .plot:hover {
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    }
+    .filename {
+      font-weight: 600;
+      font-size: 13px;
+      margin-bottom: 10px;
+      word-break: break-all;
+      color: #444;
+    }
+    img {
+      max-width: 100%;
+      height: auto;
+      border-radius: 2px;
+    }
+    @media (max-width: 1200px) { .grid { grid-template-columns: repeat(2, 1fr); } }
+    @media (max-width: 600px) { .grid { grid-template-columns: 1fr; } }
+  </style>
+</head>
+<body>
+
+  <h1>PNG Plot Viewer</h1>
+  <div class="timestamp">Generated on: January 12, 2026, 01:29 AM CET</div>
+
+  
+
+  <div class="controls">
+    <input type="text" id="filterInput" placeholder="Filter by filename..." onkeyup="filterPlots()">
+    <label style="margin-left:15px"><input type="checkbox" id="regexToggle" onchange="filterPlots()"> Regex</label>
+    <label style="margin-left:10px"><input type="checkbox" id="caseToggle" onchange="filterPlots()"> Case</label>
+    <button onclick="clearFilter()" style="margin-left:20px; padding: 8px 12px; cursor:pointer;">Clear</button>
+  </div>
+
+  <div id="plotContainer">
+    <div class="grid">
+      <div class="plot" data-filename="ServiceDRS_DRS_Board7_Group0_Channel0.png">
+        <div class="filename">ServiceDRS_DRS_Board7_Group0_Channel0.png</div>
+        <a href="../../../plots/Run1519/ServiceDRS/ServiceDRS_DRS_Board7_Group0_Channel0.png" target="_blank">
+          <img src="../../../plots/Run1519/ServiceDRS/ServiceDRS_DRS_Board7_Group0_Channel0.png" alt="ServiceDRS_DRS_Board7_Group0_Channel0.png">
+        </a>
+      </div>
+      <div class="plot" data-filename="ServiceDRS_DRS_Board7_Group0_Channel1.png">
+        <div class="filename">ServiceDRS_DRS_Board7_Group0_Channel1.png</div>
+        <a href="../../../plots/Run1519/ServiceDRS/ServiceDRS_DRS_Board7_Group0_Channel1.png" target="_blank">
+          <img src="../../../plots/Run1519/ServiceDRS/ServiceDRS_DRS_Board7_Group0_Channel1.png" alt="ServiceDRS_DRS_Board7_Group0_Channel1.png">
+        </a>
+      </div>
+      <div class="plot" data-filename="ServiceDRS_DRS_Board7_Group0_Channel2.png">
+        <div class="filename">ServiceDRS_DRS_Board7_Group0_Channel2.png</div>
+        <a href="../../../plots/Run1519/ServiceDRS/ServiceDRS_DRS_Board7_Group0_Channel2.png" target="_blank">
+          <img src="../../../plots/Run1519/ServiceDRS/ServiceDRS_DRS_Board7_Group0_Channel2.png" alt="ServiceDRS_DRS_Board7_Group0_Channel2.png">
+        </a>
+      </div>
+      <div class="plot" data-filename="ServiceDRS_DRS_Board7_Group0_Channel3.png">
+        <div class="filename">ServiceDRS_DRS_Board7_Group0_Channel3.png</div>
+        <a href="../../../plots/Run1519/ServiceDRS/ServiceDRS_DRS_Board7_Group0_Channel3.png" target="_blank">
+          <img src="../../../plots/Run1519/ServiceDRS/ServiceDRS_DRS_Board7_Group0_Channel3.png" alt="ServiceDRS_DRS_Board7_Group0_Channel3.png">
+        </a>
+      </div>
+      <div class="plot" data-filename="ServiceDRS_DRS_Board7_Group0_Channel4.png">
+        <div class="filename">ServiceDRS_DRS_Board7_Group0_Channel4.png</div>
+        <a href="../../../plots/Run1519/ServiceDRS/ServiceDRS_DRS_Board7_Group0_Channel4.png" target="_blank">
+          <img src="../../../plots/Run1519/ServiceDRS/ServiceDRS_DRS_Board7_Group0_Channel4.png" alt="ServiceDRS_DRS_Board7_Group0_Channel4.png">
+        </a>
+      </div>
+      <div class="plot" data-filename="ServiceDRS_DRS_Board7_Group0_Channel5.png">
+        <div class="filename">ServiceDRS_DRS_Board7_Group0_Channel5.png</div>
+        <a href="../../../plots/Run1519/ServiceDRS/ServiceDRS_DRS_Board7_Group0_Channel5.png" target="_blank">
+          <img src="../../../plots/Run1519/ServiceDRS/ServiceDRS_DRS_Board7_Group0_Channel5.png" alt="ServiceDRS_DRS_Board7_Group0_Channel5.png">
+        </a>
+      </div>
+      <div class="plot" data-filename="ServiceDRS_DRS_Board7_Group0_Channel6.png">
+        <div class="filename">ServiceDRS_DRS_Board7_Group0_Channel6.png</div>
+        <a href="../../../plots/Run1519/ServiceDRS/ServiceDRS_DRS_Board7_Group0_Channel6.png" target="_blank">
+          <img src="../../../plots/Run1519/ServiceDRS/ServiceDRS_DRS_Board7_Group0_Channel6.png" alt="ServiceDRS_DRS_Board7_Group0_Channel6.png">
+        </a>
+      </div>
+      <div class="plot" data-filename="ServiceDRS_DRS_Board7_Group0_Channel7.png">
+        <div class="filename">ServiceDRS_DRS_Board7_Group0_Channel7.png</div>
+        <a href="../../../plots/Run1519/ServiceDRS/ServiceDRS_DRS_Board7_Group0_Channel7.png" target="_blank">
+          <img src="../../../plots/Run1519/ServiceDRS/ServiceDRS_DRS_Board7_Group0_Channel7.png" alt="ServiceDRS_DRS_Board7_Group0_Channel7.png">
+        </a>
+      </div>
+      <div class="plot" data-filename="ServiceDRS_DRS_Board7_Group1_Channel0.png">
+        <div class="filename">ServiceDRS_DRS_Board7_Group1_Channel0.png</div>
+        <a href="../../../plots/Run1519/ServiceDRS/ServiceDRS_DRS_Board7_Group1_Channel0.png" target="_blank">
+          <img src="../../../plots/Run1519/ServiceDRS/ServiceDRS_DRS_Board7_Group1_Channel0.png" alt="ServiceDRS_DRS_Board7_Group1_Channel0.png">
+        </a>
+      </div>
+      <div class="plot" data-filename="ServiceDRS_DRS_Board7_Group1_Channel1.png">
+        <div class="filename">ServiceDRS_DRS_Board7_Group1_Channel1.png</div>
+        <a href="../../../plots/Run1519/ServiceDRS/ServiceDRS_DRS_Board7_Group1_Channel1.png" target="_blank">
+          <img src="../../../plots/Run1519/ServiceDRS/ServiceDRS_DRS_Board7_Group1_Channel1.png" alt="ServiceDRS_DRS_Board7_Group1_Channel1.png">
+        </a>
+      </div>
+      <div class="plot" data-filename="ServiceDRS_DRS_Board7_Group1_Channel6.png">
+        <div class="filename">ServiceDRS_DRS_Board7_Group1_Channel6.png</div>
+        <a href="../../../plots/Run1519/ServiceDRS/ServiceDRS_DRS_Board7_Group1_Channel6.png" target="_blank">
+          <img src="../../../plots/Run1519/ServiceDRS/ServiceDRS_DRS_Board7_Group1_Channel6.png" alt="ServiceDRS_DRS_Board7_Group1_Channel6.png">
+        </a>
+      </div>
+      <div class="plot" data-filename="ServiceDRS_DRS_Board7_Group1_Channel7.png">
+        <div class="filename">ServiceDRS_DRS_Board7_Group1_Channel7.png</div>
+        <a href="../../../plots/Run1519/ServiceDRS/ServiceDRS_DRS_Board7_Group1_Channel7.png" target="_blank">
+          <img src="../../../plots/Run1519/ServiceDRS/ServiceDRS_DRS_Board7_Group1_Channel7.png" alt="ServiceDRS_DRS_Board7_Group1_Channel7.png">
+        </a>
+      </div>
+      <div class="plot" data-filename="ServiceDRS_DRS_Board7_Group2_Channel0.png">
+        <div class="filename">ServiceDRS_DRS_Board7_Group2_Channel0.png</div>
+        <a href="../../../plots/Run1519/ServiceDRS/ServiceDRS_DRS_Board7_Group2_Channel0.png" target="_blank">
+          <img src="../../../plots/Run1519/ServiceDRS/ServiceDRS_DRS_Board7_Group2_Channel0.png" alt="ServiceDRS_DRS_Board7_Group2_Channel0.png">
+        </a>
+      </div>
+      <div class="plot" data-filename="ServiceDRS_DRS_Board7_Group2_Channel1.png">
+        <div class="filename">ServiceDRS_DRS_Board7_Group2_Channel1.png</div>
+        <a href="../../../plots/Run1519/ServiceDRS/ServiceDRS_DRS_Board7_Group2_Channel1.png" target="_blank">
+          <img src="../../../plots/Run1519/ServiceDRS/ServiceDRS_DRS_Board7_Group2_Channel1.png" alt="ServiceDRS_DRS_Board7_Group2_Channel1.png">
+        </a>
+      </div>
+      <div class="plot" data-filename="ServiceDRS_DRS_Board7_Group2_Channel2.png">
+        <div class="filename">ServiceDRS_DRS_Board7_Group2_Channel2.png</div>
+        <a href="../../../plots/Run1519/ServiceDRS/ServiceDRS_DRS_Board7_Group2_Channel2.png" target="_blank">
+          <img src="../../../plots/Run1519/ServiceDRS/ServiceDRS_DRS_Board7_Group2_Channel2.png" alt="ServiceDRS_DRS_Board7_Group2_Channel2.png">
+        </a>
+      </div>
+      <div class="plot" data-filename="ServiceDRS_DRS_Board7_Group2_Channel3.png">
+        <div class="filename">ServiceDRS_DRS_Board7_Group2_Channel3.png</div>
+        <a href="../../../plots/Run1519/ServiceDRS/ServiceDRS_DRS_Board7_Group2_Channel3.png" target="_blank">
+          <img src="../../../plots/Run1519/ServiceDRS/ServiceDRS_DRS_Board7_Group2_Channel3.png" alt="ServiceDRS_DRS_Board7_Group2_Channel3.png">
+        </a>
+      </div>
+      <div class="plot" data-filename="ServiceDRS_DRS_Board7_Group2_Channel4.png">
+        <div class="filename">ServiceDRS_DRS_Board7_Group2_Channel4.png</div>
+        <a href="../../../plots/Run1519/ServiceDRS/ServiceDRS_DRS_Board7_Group2_Channel4.png" target="_blank">
+          <img src="../../../plots/Run1519/ServiceDRS/ServiceDRS_DRS_Board7_Group2_Channel4.png" alt="ServiceDRS_DRS_Board7_Group2_Channel4.png">
+        </a>
+      </div>
+      <div class="plot" data-filename="ServiceDRS_DRS_Board7_Group2_Channel5.png">
+        <div class="filename">ServiceDRS_DRS_Board7_Group2_Channel5.png</div>
+        <a href="../../../plots/Run1519/ServiceDRS/ServiceDRS_DRS_Board7_Group2_Channel5.png" target="_blank">
+          <img src="../../../plots/Run1519/ServiceDRS/ServiceDRS_DRS_Board7_Group2_Channel5.png" alt="ServiceDRS_DRS_Board7_Group2_Channel5.png">
+        </a>
+      </div>
+      <div class="plot" data-filename="ServiceDRS_DRS_Board7_Group2_Channel6.png">
+        <div class="filename">ServiceDRS_DRS_Board7_Group2_Channel6.png</div>
+        <a href="../../../plots/Run1519/ServiceDRS/ServiceDRS_DRS_Board7_Group2_Channel6.png" target="_blank">
+          <img src="../../../plots/Run1519/ServiceDRS/ServiceDRS_DRS_Board7_Group2_Channel6.png" alt="ServiceDRS_DRS_Board7_Group2_Channel6.png">
+        </a>
+      </div>
+      <div class="plot" data-filename="ServiceDRS_DRS_Board7_Group2_Channel7.png">
+        <div class="filename">ServiceDRS_DRS_Board7_Group2_Channel7.png</div>
+        <a href="../../../plots/Run1519/ServiceDRS/ServiceDRS_DRS_Board7_Group2_Channel7.png" target="_blank">
+          <img src="../../../plots/Run1519/ServiceDRS/ServiceDRS_DRS_Board7_Group2_Channel7.png" alt="ServiceDRS_DRS_Board7_Group2_Channel7.png">
+        </a>
+      </div>
+    </div>
+  </div>
+  <script>
+    function getQueryParams() {
+      const params = new URLSearchParams(window.location.search);
+      return { filter: params.get("filter") || "", regex: params.get("regex") === "1", caseSensitive: params.get("case") === "1" };
+    }
+    function updateURLParams(filter, regex, caseSensitive) {
+      const params = new URLSearchParams();
+      if (filter) params.set("filter", filter);
+      if (regex) params.set("regex", "1");
+      if (caseSensitive) params.set("case", "1");
+      history.replaceState(null, "", `${window.location.pathname}?${params.toString()}`);
+    }
+    function filterPlots() {
+      const input = document.getElementById("filterInput").value.trim();
+      const useRegex = document.getElementById("regexToggle").checked;
+      const caseSensitive = document.getElementById("caseToggle").checked;
+      const plots = document.getElementsByClassName("plot");
+      updateURLParams(input, useRegex, caseSensitive);
+      for (let plot of plots) {
+        const name = plot.getAttribute("data-filename");
+        let match = false;
+        if (useRegex) {
+          try {
+            const escaped = input.replace(/[-\/\^$+?.()|[\]{{}}]/g, '\\$&').replace(/\*/g, '.*').replace(/\?/g, '.');
+            const regex = new RegExp(escaped, caseSensitive ? "" : "i");
+            match = regex.test(name);
+          } catch (e) { match = false; }
+        } else {
+          match = caseSensitive ? name.includes(input) : name.toLowerCase().includes(input.toLowerCase());
+        }
+        plot.style.display = match ? "" : "none";
+      }
+    }
+    function clearFilter() {
+      document.getElementById("filterInput").value = "";
+      document.getElementById("regexToggle").checked = false;
+      document.getElementById("caseToggle").checked = false;
+      filterPlots();
+    }
+    window.addEventListener("DOMContentLoaded", () => {
+      const { filter, regex, caseSensitive } = getQueryParams();
+      document.getElementById("filterInput").value = filter;
+      document.getElementById("regexToggle").checked = regex;
+      document.getElementById("caseToggle").checked = caseSensitive;
+      filterPlots();
+    });
+  </script>
+</body>
+</html>

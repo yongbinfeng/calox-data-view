@@ -1,0 +1,390 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Particle Identification</title>
+  <style>
+    body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; padding: 10px 20px; margin: 0; line-height: 1.4; color: #333; }
+    .top-bar { display: flex; align-items: center; gap: 30px; padding: 10px 0; border-bottom: 1px solid #eee; margin-bottom: 15px; position: sticky; top: 0; background: white; z-index: 100; }
+    .title-group { display: flex; flex-direction: column; min-width: fit-content; }
+    h1 { font-size: 20px; margin: 0; color: #1a1a1a; white-space: nowrap; }
+    .timestamp { font-size: 11px; color: #888; white-space: nowrap; }
+    .controls { display: flex; align-items: center; gap: 12px; }
+    input[type="text"] { font-size: 14px; padding: 4px 10px; width: 250px; border: 1px solid #ccc; border-radius: 4px; }
+    .intro-text { background: #f8f9fa; border-left: 4px solid #007bff; padding: 10px 16px; margin-bottom: 15px; font-size: 14px; border-radius: 0 4px 4px 0; }
+    .intro-text li { margin-bottom: 4px; }
+    .grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 15px; }
+    .plot { border: 1px solid #e1e4e8; padding: 8px; text-align: center; border-radius: 6px; background: #fff; }
+    .filename { font-weight: 600; font-size: 12px; margin-bottom: 8px; word-break: break-all; color: #444; }
+    img { max-width: 100%; height: auto; border-radius: 2px; }
+    button { padding: 4px 12px; cursor: pointer; font-size: 13px; }
+    @media (max-width: 1100px) { .grid { grid-template-columns: repeat(2, 1fr); } }
+    @media (max-width: 800px) { .top-bar { flex-direction: column; align-items: flex-start; gap: 10px; } }
+  </style>
+</head>
+<body>
+  <div class="top-bar">
+    <div class="title-group">
+      <h1>Particle Identification</h1>
+      <div class="timestamp">February 20, 2026, 10:00 PM CET</div>
+    </div>
+    <div class="controls">
+      <input type="text" id="filterInput" placeholder="Filter by filename..." onkeyup="filterPlots()">
+      <label><input type="checkbox" id="regexToggle" onchange="filterPlots()"> Regex</label>
+      <label><input type="checkbox" id="caseToggle" onchange="filterPlots()"> Case</label>
+      <button onclick="clearFilter()">Clear</button>
+    </div>
+  </div>
+  <div class="intro-text">This page shows the pulse shape analysis for the service DRS channels for particle identification.<br>No selection is applied unless specified.<br></div>
+  <div id="plotContainer">
+    <div class="grid">
+      <div class="plot" data-filename="HoleVeto_ADC_vs_TS.png">
+        <div class="filename">HoleVeto_ADC_vs_TS.png</div>
+        <a href="../../../plots/Run1475/drs_service/HoleVeto_ADC_vs_TS.png" target="_blank">
+          <img src="../../../plots/Run1475/drs_service/HoleVeto_ADC_vs_TS.png" alt="HoleVeto_ADC_vs_TS.png">
+        </a>
+      </div>
+      <div class="plot" data-filename="HoleVeto_peak_position.png">
+        <div class="filename">HoleVeto_peak_position.png</div>
+        <a href="../../../plots/Run1475/drs_service/HoleVeto_peak_position.png" target="_blank">
+          <img src="../../../plots/Run1475/drs_service/HoleVeto_peak_position.png" alt="HoleVeto_peak_position.png">
+        </a>
+      </div>
+      <div class="plot" data-filename="HoleVeto_peak_value.png">
+        <div class="filename">HoleVeto_peak_value.png</div>
+        <a href="../../../plots/Run1475/drs_service/HoleVeto_peak_value.png" target="_blank">
+          <img src="../../../plots/Run1475/drs_service/HoleVeto_peak_value.png" alt="HoleVeto_peak_value.png">
+        </a>
+      </div>
+      <div class="plot" data-filename="HoleVeto_sum.png">
+        <div class="filename">HoleVeto_sum.png</div>
+        <a href="../../../plots/Run1475/drs_service/HoleVeto_sum.png" target="_blank">
+          <img src="../../../plots/Run1475/drs_service/HoleVeto_sum.png" alt="HoleVeto_sum.png">
+        </a>
+      </div>
+      <div class="plot" data-filename="HoleVeto_sum_cdf.png">
+        <div class="filename">HoleVeto_sum_cdf.png</div>
+        <a href="../../../plots/Run1475/drs_service/HoleVeto_sum_cdf.png" target="_blank">
+          <img src="../../../plots/Run1475/drs_service/HoleVeto_sum_cdf.png" alt="HoleVeto_sum_cdf.png">
+        </a>
+      </div>
+      <div class="plot" data-filename="PSD_ADC_vs_TS.png">
+        <div class="filename">PSD_ADC_vs_TS.png</div>
+        <a href="../../../plots/Run1475/drs_service/PSD_ADC_vs_TS.png" target="_blank">
+          <img src="../../../plots/Run1475/drs_service/PSD_ADC_vs_TS.png" alt="PSD_ADC_vs_TS.png">
+        </a>
+      </div>
+      <div class="plot" data-filename="PSD_peak_position.png">
+        <div class="filename">PSD_peak_position.png</div>
+        <a href="../../../plots/Run1475/drs_service/PSD_peak_position.png" target="_blank">
+          <img src="../../../plots/Run1475/drs_service/PSD_peak_position.png" alt="PSD_peak_position.png">
+        </a>
+      </div>
+      <div class="plot" data-filename="PSD_peak_value.png">
+        <div class="filename">PSD_peak_value.png</div>
+        <a href="../../../plots/Run1475/drs_service/PSD_peak_value.png" target="_blank">
+          <img src="../../../plots/Run1475/drs_service/PSD_peak_value.png" alt="PSD_peak_value.png">
+        </a>
+      </div>
+      <div class="plot" data-filename="PSD_sum.png">
+        <div class="filename">PSD_sum.png</div>
+        <a href="../../../plots/Run1475/drs_service/PSD_sum.png" target="_blank">
+          <img src="../../../plots/Run1475/drs_service/PSD_sum.png" alt="PSD_sum.png">
+        </a>
+      </div>
+      <div class="plot" data-filename="PSD_sum_cdf.png">
+        <div class="filename">PSD_sum_cdf.png</div>
+        <a href="../../../plots/Run1475/drs_service/PSD_sum_cdf.png" target="_blank">
+          <img src="../../../plots/Run1475/drs_service/PSD_sum_cdf.png" alt="PSD_sum_cdf.png">
+        </a>
+      </div>
+      <div class="plot" data-filename="TTUMuonVeto_ADC_vs_TS.png">
+        <div class="filename">TTUMuonVeto_ADC_vs_TS.png</div>
+        <a href="../../../plots/Run1475/drs_service/TTUMuonVeto_ADC_vs_TS.png" target="_blank">
+          <img src="../../../plots/Run1475/drs_service/TTUMuonVeto_ADC_vs_TS.png" alt="TTUMuonVeto_ADC_vs_TS.png">
+        </a>
+      </div>
+      <div class="plot" data-filename="TTUMuonVeto_peak_position.png">
+        <div class="filename">TTUMuonVeto_peak_position.png</div>
+        <a href="../../../plots/Run1475/drs_service/TTUMuonVeto_peak_position.png" target="_blank">
+          <img src="../../../plots/Run1475/drs_service/TTUMuonVeto_peak_position.png" alt="TTUMuonVeto_peak_position.png">
+        </a>
+      </div>
+      <div class="plot" data-filename="TTUMuonVeto_peak_value.png">
+        <div class="filename">TTUMuonVeto_peak_value.png</div>
+        <a href="../../../plots/Run1475/drs_service/TTUMuonVeto_peak_value.png" target="_blank">
+          <img src="../../../plots/Run1475/drs_service/TTUMuonVeto_peak_value.png" alt="TTUMuonVeto_peak_value.png">
+        </a>
+      </div>
+      <div class="plot" data-filename="TTUMuonVeto_sum.png">
+        <div class="filename">TTUMuonVeto_sum.png</div>
+        <a href="../../../plots/Run1475/drs_service/TTUMuonVeto_sum.png" target="_blank">
+          <img src="../../../plots/Run1475/drs_service/TTUMuonVeto_sum.png" alt="TTUMuonVeto_sum.png">
+        </a>
+      </div>
+      <div class="plot" data-filename="TTUMuonVeto_sum_cdf.png">
+        <div class="filename">TTUMuonVeto_sum_cdf.png</div>
+        <a href="../../../plots/Run1475/drs_service/TTUMuonVeto_sum_cdf.png" target="_blank">
+          <img src="../../../plots/Run1475/drs_service/TTUMuonVeto_sum_cdf.png" alt="TTUMuonVeto_sum_cdf.png">
+        </a>
+      </div>
+      <div class="plot" data-filename="Cer474_ADC_vs_TS.png">
+        <div class="filename">Cer474_ADC_vs_TS.png</div>
+        <a href="../../../plots/Run1475/drs_service/Cer474_ADC_vs_TS.png" target="_blank">
+          <img src="../../../plots/Run1475/drs_service/Cer474_ADC_vs_TS.png" alt="Cer474_ADC_vs_TS.png">
+        </a>
+      </div>
+      <div class="plot" data-filename="Cer474_peak_position.png">
+        <div class="filename">Cer474_peak_position.png</div>
+        <a href="../../../plots/Run1475/drs_service/Cer474_peak_position.png" target="_blank">
+          <img src="../../../plots/Run1475/drs_service/Cer474_peak_position.png" alt="Cer474_peak_position.png">
+        </a>
+      </div>
+      <div class="plot" data-filename="Cer474_peak_value.png">
+        <div class="filename">Cer474_peak_value.png</div>
+        <a href="../../../plots/Run1475/drs_service/Cer474_peak_value.png" target="_blank">
+          <img src="../../../plots/Run1475/drs_service/Cer474_peak_value.png" alt="Cer474_peak_value.png">
+        </a>
+      </div>
+      <div class="plot" data-filename="Cer474_sum.png">
+        <div class="filename">Cer474_sum.png</div>
+        <a href="../../../plots/Run1475/drs_service/Cer474_sum.png" target="_blank">
+          <img src="../../../plots/Run1475/drs_service/Cer474_sum.png" alt="Cer474_sum.png">
+        </a>
+      </div>
+      <div class="plot" data-filename="Cer474_sum_cdf.png">
+        <div class="filename">Cer474_sum_cdf.png</div>
+        <a href="../../../plots/Run1475/drs_service/Cer474_sum_cdf.png" target="_blank">
+          <img src="../../../plots/Run1475/drs_service/Cer474_sum_cdf.png" alt="Cer474_sum_cdf.png">
+        </a>
+      </div>
+      <div class="plot" data-filename="Cer519_ADC_vs_TS.png">
+        <div class="filename">Cer519_ADC_vs_TS.png</div>
+        <a href="../../../plots/Run1475/drs_service/Cer519_ADC_vs_TS.png" target="_blank">
+          <img src="../../../plots/Run1475/drs_service/Cer519_ADC_vs_TS.png" alt="Cer519_ADC_vs_TS.png">
+        </a>
+      </div>
+      <div class="plot" data-filename="Cer519_peak_position.png">
+        <div class="filename">Cer519_peak_position.png</div>
+        <a href="../../../plots/Run1475/drs_service/Cer519_peak_position.png" target="_blank">
+          <img src="../../../plots/Run1475/drs_service/Cer519_peak_position.png" alt="Cer519_peak_position.png">
+        </a>
+      </div>
+      <div class="plot" data-filename="Cer519_peak_value.png">
+        <div class="filename">Cer519_peak_value.png</div>
+        <a href="../../../plots/Run1475/drs_service/Cer519_peak_value.png" target="_blank">
+          <img src="../../../plots/Run1475/drs_service/Cer519_peak_value.png" alt="Cer519_peak_value.png">
+        </a>
+      </div>
+      <div class="plot" data-filename="Cer519_sum.png">
+        <div class="filename">Cer519_sum.png</div>
+        <a href="../../../plots/Run1475/drs_service/Cer519_sum.png" target="_blank">
+          <img src="../../../plots/Run1475/drs_service/Cer519_sum.png" alt="Cer519_sum.png">
+        </a>
+      </div>
+      <div class="plot" data-filename="Cer519_sum_cdf.png">
+        <div class="filename">Cer519_sum_cdf.png</div>
+        <a href="../../../plots/Run1475/drs_service/Cer519_sum_cdf.png" target="_blank">
+          <img src="../../../plots/Run1475/drs_service/Cer519_sum_cdf.png" alt="Cer519_sum_cdf.png">
+        </a>
+      </div>
+      <div class="plot" data-filename="Cer537_ADC_vs_TS.png">
+        <div class="filename">Cer537_ADC_vs_TS.png</div>
+        <a href="../../../plots/Run1475/drs_service/Cer537_ADC_vs_TS.png" target="_blank">
+          <img src="../../../plots/Run1475/drs_service/Cer537_ADC_vs_TS.png" alt="Cer537_ADC_vs_TS.png">
+        </a>
+      </div>
+      <div class="plot" data-filename="Cer537_peak_position.png">
+        <div class="filename">Cer537_peak_position.png</div>
+        <a href="../../../plots/Run1475/drs_service/Cer537_peak_position.png" target="_blank">
+          <img src="../../../plots/Run1475/drs_service/Cer537_peak_position.png" alt="Cer537_peak_position.png">
+        </a>
+      </div>
+      <div class="plot" data-filename="Cer537_peak_value.png">
+        <div class="filename">Cer537_peak_value.png</div>
+        <a href="../../../plots/Run1475/drs_service/Cer537_peak_value.png" target="_blank">
+          <img src="../../../plots/Run1475/drs_service/Cer537_peak_value.png" alt="Cer537_peak_value.png">
+        </a>
+      </div>
+      <div class="plot" data-filename="Cer537_sum.png">
+        <div class="filename">Cer537_sum.png</div>
+        <a href="../../../plots/Run1475/drs_service/Cer537_sum.png" target="_blank">
+          <img src="../../../plots/Run1475/drs_service/Cer537_sum.png" alt="Cer537_sum.png">
+        </a>
+      </div>
+      <div class="plot" data-filename="Cer537_sum_cdf.png">
+        <div class="filename">Cer537_sum_cdf.png</div>
+        <a href="../../../plots/Run1475/drs_service/Cer537_sum_cdf.png" target="_blank">
+          <img src="../../../plots/Run1475/drs_service/Cer537_sum_cdf.png" alt="Cer537_sum_cdf.png">
+        </a>
+      </div>
+      <div class="plot" data-filename="KT1_ADC_vs_TS.png">
+        <div class="filename">KT1_ADC_vs_TS.png</div>
+        <a href="../../../plots/Run1475/drs_service/KT1_ADC_vs_TS.png" target="_blank">
+          <img src="../../../plots/Run1475/drs_service/KT1_ADC_vs_TS.png" alt="KT1_ADC_vs_TS.png">
+        </a>
+      </div>
+      <div class="plot" data-filename="KT1_peak_position.png">
+        <div class="filename">KT1_peak_position.png</div>
+        <a href="../../../plots/Run1475/drs_service/KT1_peak_position.png" target="_blank">
+          <img src="../../../plots/Run1475/drs_service/KT1_peak_position.png" alt="KT1_peak_position.png">
+        </a>
+      </div>
+      <div class="plot" data-filename="KT1_peak_value.png">
+        <div class="filename">KT1_peak_value.png</div>
+        <a href="../../../plots/Run1475/drs_service/KT1_peak_value.png" target="_blank">
+          <img src="../../../plots/Run1475/drs_service/KT1_peak_value.png" alt="KT1_peak_value.png">
+        </a>
+      </div>
+      <div class="plot" data-filename="KT1_sum.png">
+        <div class="filename">KT1_sum.png</div>
+        <a href="../../../plots/Run1475/drs_service/KT1_sum.png" target="_blank">
+          <img src="../../../plots/Run1475/drs_service/KT1_sum.png" alt="KT1_sum.png">
+        </a>
+      </div>
+      <div class="plot" data-filename="KT1_sum_cdf.png">
+        <div class="filename">KT1_sum_cdf.png</div>
+        <a href="../../../plots/Run1475/drs_service/KT1_sum_cdf.png" target="_blank">
+          <img src="../../../plots/Run1475/drs_service/KT1_sum_cdf.png" alt="KT1_sum_cdf.png">
+        </a>
+      </div>
+      <div class="plot" data-filename="KT2_ADC_vs_TS.png">
+        <div class="filename">KT2_ADC_vs_TS.png</div>
+        <a href="../../../plots/Run1475/drs_service/KT2_ADC_vs_TS.png" target="_blank">
+          <img src="../../../plots/Run1475/drs_service/KT2_ADC_vs_TS.png" alt="KT2_ADC_vs_TS.png">
+        </a>
+      </div>
+      <div class="plot" data-filename="KT2_peak_position.png">
+        <div class="filename">KT2_peak_position.png</div>
+        <a href="../../../plots/Run1475/drs_service/KT2_peak_position.png" target="_blank">
+          <img src="../../../plots/Run1475/drs_service/KT2_peak_position.png" alt="KT2_peak_position.png">
+        </a>
+      </div>
+      <div class="plot" data-filename="KT2_peak_value.png">
+        <div class="filename">KT2_peak_value.png</div>
+        <a href="../../../plots/Run1475/drs_service/KT2_peak_value.png" target="_blank">
+          <img src="../../../plots/Run1475/drs_service/KT2_peak_value.png" alt="KT2_peak_value.png">
+        </a>
+      </div>
+      <div class="plot" data-filename="KT2_sum.png">
+        <div class="filename">KT2_sum.png</div>
+        <a href="../../../plots/Run1475/drs_service/KT2_sum.png" target="_blank">
+          <img src="../../../plots/Run1475/drs_service/KT2_sum.png" alt="KT2_sum.png">
+        </a>
+      </div>
+      <div class="plot" data-filename="KT2_sum_cdf.png">
+        <div class="filename">KT2_sum_cdf.png</div>
+        <a href="../../../plots/Run1475/drs_service/KT2_sum_cdf.png" target="_blank">
+          <img src="../../../plots/Run1475/drs_service/KT2_sum_cdf.png" alt="KT2_sum_cdf.png">
+        </a>
+      </div>
+      <div class="plot" data-filename="T3_ADC_vs_TS.png">
+        <div class="filename">T3_ADC_vs_TS.png</div>
+        <a href="../../../plots/Run1475/drs_service/T3_ADC_vs_TS.png" target="_blank">
+          <img src="../../../plots/Run1475/drs_service/T3_ADC_vs_TS.png" alt="T3_ADC_vs_TS.png">
+        </a>
+      </div>
+      <div class="plot" data-filename="T3_peak_position.png">
+        <div class="filename">T3_peak_position.png</div>
+        <a href="../../../plots/Run1475/drs_service/T3_peak_position.png" target="_blank">
+          <img src="../../../plots/Run1475/drs_service/T3_peak_position.png" alt="T3_peak_position.png">
+        </a>
+      </div>
+      <div class="plot" data-filename="T3_peak_value.png">
+        <div class="filename">T3_peak_value.png</div>
+        <a href="../../../plots/Run1475/drs_service/T3_peak_value.png" target="_blank">
+          <img src="../../../plots/Run1475/drs_service/T3_peak_value.png" alt="T3_peak_value.png">
+        </a>
+      </div>
+      <div class="plot" data-filename="T3_sum.png">
+        <div class="filename">T3_sum.png</div>
+        <a href="../../../plots/Run1475/drs_service/T3_sum.png" target="_blank">
+          <img src="../../../plots/Run1475/drs_service/T3_sum.png" alt="T3_sum.png">
+        </a>
+      </div>
+      <div class="plot" data-filename="T3_sum_cdf.png">
+        <div class="filename">T3_sum_cdf.png</div>
+        <a href="../../../plots/Run1475/drs_service/T3_sum_cdf.png" target="_blank">
+          <img src="../../../plots/Run1475/drs_service/T3_sum_cdf.png" alt="T3_sum_cdf.png">
+        </a>
+      </div>
+      <div class="plot" data-filename="T4_ADC_vs_TS.png">
+        <div class="filename">T4_ADC_vs_TS.png</div>
+        <a href="../../../plots/Run1475/drs_service/T4_ADC_vs_TS.png" target="_blank">
+          <img src="../../../plots/Run1475/drs_service/T4_ADC_vs_TS.png" alt="T4_ADC_vs_TS.png">
+        </a>
+      </div>
+      <div class="plot" data-filename="T4_peak_position.png">
+        <div class="filename">T4_peak_position.png</div>
+        <a href="../../../plots/Run1475/drs_service/T4_peak_position.png" target="_blank">
+          <img src="../../../plots/Run1475/drs_service/T4_peak_position.png" alt="T4_peak_position.png">
+        </a>
+      </div>
+      <div class="plot" data-filename="T4_peak_value.png">
+        <div class="filename">T4_peak_value.png</div>
+        <a href="../../../plots/Run1475/drs_service/T4_peak_value.png" target="_blank">
+          <img src="../../../plots/Run1475/drs_service/T4_peak_value.png" alt="T4_peak_value.png">
+        </a>
+      </div>
+      <div class="plot" data-filename="T4_sum.png">
+        <div class="filename">T4_sum.png</div>
+        <a href="../../../plots/Run1475/drs_service/T4_sum.png" target="_blank">
+          <img src="../../../plots/Run1475/drs_service/T4_sum.png" alt="T4_sum.png">
+        </a>
+      </div>
+      <div class="plot" data-filename="T4_sum_cdf.png">
+        <div class="filename">T4_sum_cdf.png</div>
+        <a href="../../../plots/Run1475/drs_service/T4_sum_cdf.png" target="_blank">
+          <img src="../../../plots/Run1475/drs_service/T4_sum_cdf.png" alt="T4_sum_cdf.png">
+        </a>
+      </div>
+    </div>
+  </div>
+  <script>
+    function getQueryParams() {
+      const params = new URLSearchParams(window.location.search);
+      return { filter: params.get("filter") || "", regex: params.get("regex") === "1", caseSensitive: params.get("case") === "1" };
+    }
+    function updateURLParams(filter, regex, caseSensitive) {
+      const params = new URLSearchParams();
+      if (filter) params.set("filter", filter);
+      if (regex) params.set("regex", "1");
+      if (caseSensitive) params.set("case", "1");
+      history.replaceState(null, "", `${window.location.pathname}?${params.toString()}`);
+    }
+    function filterPlots() {
+      const input = document.getElementById("filterInput").value.trim();
+      const useRegex = document.getElementById("regexToggle").checked;
+      const caseSensitive = document.getElementById("caseToggle").checked;
+      const plots = document.getElementsByClassName("plot");
+      updateURLParams(input, useRegex, caseSensitive);
+      for (let plot of plots) {
+        const name = plot.getAttribute("data-filename");
+        let match = false;
+        if (useRegex) {
+          try {
+            const regex = new RegExp(input, caseSensitive ? "" : "i");
+            match = regex.test(name);
+          } catch (e) { match = false; }
+        } else {
+          match = caseSensitive ? name.includes(input) : name.toLowerCase().includes(input.toLowerCase());
+        }
+        plot.style.display = match ? "" : "none";
+      }
+    }
+    function clearFilter() {
+      document.getElementById("filterInput").value = "";
+      document.getElementById("regexToggle").checked = false;
+      document.getElementById("caseToggle").checked = false;
+      filterPlots();
+    }
+    window.addEventListener("DOMContentLoaded", () => {
+      const { filter, regex, caseSensitive } = getQueryParams();
+      document.getElementById("filterInput").value = filter;
+      document.getElementById("regexToggle").checked = regex;
+      document.getElementById("caseToggle").checked = caseSensitive;
+      filterPlots();
+    });
+  </script>
+</body>
+</html>
